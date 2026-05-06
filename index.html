@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stream Picker PRO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #0a0a0a;
+            --card: #1a1a1a;
+            --text: #fff;
+            --text-dim: #aaa;
+            --netflix: #E50914;
+            --disney: #113CCF;
+            --hbo: #7B2D8E;
+            --prime: #00A8E1;
+            --green: #1DB954;
+            --gold: #FFD700;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            font-family: 'Inter', sans-serif;
+            background: var(--bg); 
+            color: var(--text); 
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { 
+            text-align: center; 
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 20px 0 40px;
+            background: linear-gradient(45deg, #E50914, #7B2D8E);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .krok { display: none; animation: fadeIn 0.3s; }
+        .krok.active { display: block; }
+        @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+        
+        .section-title {
+            text-align: center;
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            color: var(--text-dim);
+        }
+        
+        .platformy-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .platforma-check { display: none; }
+        .platforma-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 90px;
+            border-radius: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 3px solid transparent;
+            transition: all 0.2s;
+            opacity: 0.4;
+        }
+        .platforma-check:checked + .platforma-label {
+            opacity: 1;
+            border-color: white;
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,255,255,0.2);
+        }
+        .netflix-bg { background: var(--netflix); }
+        .disney-bg { background: var(--disney); }
+        .hbo-bg { background: var(--hbo); }
+        .prime-bg { background: var(--prime); }
+        
+        .filtry {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+        select {
+            background: var(--card);
+            color: var(--text);
+            border: 2px solid #333;
+            padding: 12px 20px;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        .btn {
+            background: linear-gradient(45deg, #E50914, #B81D24);
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .btn:hover { transform: scale(1.05); }
+        .btn-secondary { background: #333; }
+        .btn-random { background: linear-gradient(45deg, #7B2D8E, #113CCF); }
+        
+        #wyniki {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+        .film {
+            background: var(--card);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.3s;
+            border: 1px solid #222;
+        }
+        .film:hover { transform: translateY(-8px); }
+        .film img { 
+            width: 100%; 
+            height: 420px;
+            object-fit: cover;
+        }
+        .film-info { padding: 20px; }
+        .film-tytul {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .film-meta {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .gwiazdki { color: var(--gold); }
+        .badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+        .guziki {
+            display: flex;
+            gap: 10px;
+            flex-direction: column;
+        }
+        .guziki a {
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .btn-trailer { background: #333; color: white; }
+        .btn-ogladaj { background: var(--green); color: white; }
+        .guziki a:hover { opacity: 0.8; }
+        
+        .loader, .error {
+            text-align: center;
+            font-size: 1.5rem;
+            padding: 60px 20px;
+            color: var(--text-dim);
+        }
+        .center { text-align: center; margin: 30px 0; display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Stream Picker 🍿</h1>
+
+        <div class="krok active" id="krok1">
+            <div class="section-title">1. Wybierz platformy</div>
+            <div class="platformy-grid">
+                <div>
+                    <input type="checkbox" id="netflix" class="platforma-check" value="8" checked>
+                    <label for="netflix" class="platforma-label netflix-bg">NETFLIX</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="disney" class="platforma-check" value="337">
+                    <label for="disney" class="platforma-label disney-bg">DISNEY+</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="hbo" class="platforma-check" value="1899">
+                    <label for="hbo" class="platforma-label hbo-bg">HBO MAX</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="prime" class="platforma-check" value="119">
+                    <label for="prime" class="platforma-label prime-bg">PRIME</label>
+                </div>
+            </div>
+
+            <div class="section-title">2. Filtry</div>
+            <div class="filtry">
+                <select id="gatunek">
+                    <option value="">🎲 Wszystkie gatunki</option>
+                    <option value="35">😂 Komedia</option>
+                    <option value="28">💥 Akcja</option>
+                    <option value="27">👻 Horror</option>
+                    <option value="878">🚀 Sci-Fi</option>
+                    <option value="10749">❤️ Romans</option>
+                    <option value="18">🎭 Dramat</option>
+                    <option value="99">📚 Dokument</option>
+                </select>
+                <select id="typ">
+                    <option value="movie">Film</option>
+                    <option value="tv">Serial</option>
+                </select>
+                <select id="ocena">
+                    <option value="0">⭐ Wszystkie oceny</option>
+                    <option value="7">⭐ 7.0+ Dobre</option>
+                    <option value="8">⭐ 8.0+ Świetne</option>
+                    <option value="8.5">⭐ 8.5+ Arcydzieła</option>
+                </select>
+                <select id="sortowanie">
+                    <option value="random">🎲 Losowo</option>
+                    <option value="popularity.desc">Najpopularniejsze</option>
+                    <option value="vote_average.desc">Najlepiej oceniane</option>
+                    <option value="release_date.desc">Najnowsze</option>
+                </select>
+            </div>
+            <div class="center">
+                <button class="btn" onclick="szukaj(false)">Szukaj filmów</button>
+            </div>
+        </div>
+
+        <div class="krok" id="krok2">
+            <div class="section-title">Propozycje dla Ciebie</div>
+            <div id="wyniki"></div>
+            <div class="center">
+                <button class="btn btn-random" onclick="szukaj(true)">🎲 Losuj inne</button>
+                <button class="btn btn-secondary" onclick="reset()">Wybierz od nowa</button>
+            </div>
+        </div>
+    </div>
+
+<script>
+const TMDB_API_KEY = '4ad854ed9635fa2235dd4ad6a292f950';
+
+const PLATFORMY = {
+    8: { nazwa: 'Netflix', kolor: '#E50914' },
+    337: { nazwa: 'Disney+', kolor: '#113CCF' },
+    1899: { nazwa: 'HBO Max', kolor: '#7B2D8E' },
+    119: { nazwa: 'Prime Video', kolor: '#00A8E1' }
+};
+
+async function szukaj(losuj = false) {
+    const zaznaczone = Array.from(document.querySelectorAll('.platforma-check:checked')).map(el => el.value);
+    
+    if (zaznaczone.length === 0) {
+        alert('Zaznacz przynajmniej jedną platformę!');
+        return;
+    }
+    
+    const gatunek = document.getElementById('gatunek').value;
+    const typ = document.getElementById('typ').value;
+    const minOcena = document.getElementById('ocena').value;
+    let sortowanie = document.getElementById('sortowanie').value;
+    
+    if (losuj || sortowanie === 'random') {
+        sortowanie = ['popularity.desc', 'vote_average.desc', 'release_date.desc'][Math.floor(Math.random() * 3)];
+    }
+    
+    document.getElementById('krok1').classList.remove('active');
+    document.getElementById('krok2').classList.add('active');
+    document.getElementById('wyniki').innerHTML = '<div class="loader">Szukam najlepszych tytułów... 🎲</div>';
+    
+    const losowaStrona = Math.floor(Math.random() * 5) + 1;
+    const providers = zaznaczone.join('|');
+    const genreParam = gatunek ? `&with_genres=${gatunek}` : '';
+    const ratingParam = minOcena > 0 ? `&vote_average.gte=${minOcena}&vote_count.gte=100` : '';
+    
+    const url = `https://api.themoviedb.org/3/discover/${typ}?api_key=${TMDB_API_KEY}&language=pl-PL&sort_by=${sortowanie}&with_watch_providers=${providers}&watch_region=PL&page=${losowaStrona}${genreParam}${ratingParam}`;
+    
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+        
+        if (!data.results || data.results.length === 0) {
+            document.getElementById('wyniki').innerHTML = '<div class="error">Brak wyników 😢 Zmniejsz wymagania w filtrach</div>';
+            return;
+        }
+        
+        const potasowane = data.results.sort(() => Math.random() - 0.5).slice(0, 12);
+        
+        const filmyZDanych = await Promise.all(
+            potasowane.map(async (film) => {
+                const [trailerUrl, watchData] = await Promise.all([
+                    pobierzZwiastun(film.id, typ),
+                    pobierzDanePlatform(film.id, typ)
+                ]);
+                return {...film, trailerUrl, watchData};
+            })
+        );
+        
+        wyswietlWyniki(filmyZDanych, typ);
+        
+    } catch (error) {
+        document.getElementById('wyniki').innerHTML = '<div class="error">Błąd API 😢 Spróbuj ponownie</div>';
+    }
+}
+
+async function pobierzZwiastun(id, typ) {
+    try {
+        const url = `https://api.themoviedb.org/3/${typ}/${id}/videos?api_key=${TMDB_API_KEY}&language=pl-PL`;
+        const res = await fetch(url);
+        const data = await res.json();
+        const trailer = data.results.find(v => v.type === 'Trailer' && v.site === 'YouTube');
+        return trailer ? `https://www.youtube.com/watch?v=${trailer.key}` : null;
+    } catch { return null; }
+}
+
+async function pobierzDanePlatform(id, typ) {
+    try {
+        const url = `https://api.themoviedb.org/3/${typ}/${id}/watch/providers?api_key=${TMDB_API_KEY}`;
+        const res = await fetch(url);
+        const data = await res.json();
+        return data.results?.PL || null;
+    } catch { return null; }
+}
+
+function wyswietlWyniki(filmy, typ) {
+    const kontener = document.getElementById('wyniki');
+    kontener.innerHTML = '';
+    
+    filmy.forEach(film => {
+        const tytul = film.title || film.name;
+        const rok = (film.release_date || film.first_air_date || '').slice(0, 4);
+        const okladka = film.poster_path 
+            ? `https://image.tmdb.org/t/p/w500${film.poster_path}` 
+            : 'https://via.placeholder.com/500x750?text=Brak+okładki';
+        
+        const dostepne = film.watchData?.flatrate || [];
+        const platformyBadges = dostepne
+            .filter(p => PLATFORMY[p.provider_id])
+            .map(p => `<span class="badge" style="background:${PLATFORMY[p.provider_id].kolor}">${PLATFORMY[p.provider_id].nazwa}</span>`)
+            .join('');
+        
+        const linkOgladaj = film.watchData?.link || `https://www.justwatch.com/pl/szukaj?q=${encodeURIComponent(tytul)}`;
+        
+        kontener.innerHTML += `
+            <div class="film">
+                <img src="${okladka}" alt="${tytul}" loading="lazy">
+                <div class="film-info">
+                    <div class="film-tytul">${tytul} ${rok ? `(${rok})` : ''}</div>
+                    <div class="film-meta">
+                        <span class="gwiazdki">⭐ ${film.vote_average.toFixed(1)}</span>
+                        <span>| ${typ === 'movie' ? 'Film' : 'Serial'}</span>
+                    </div>
+                    <div style="margin-bottom: 15px;">${platformyBadges || '<span class="badge" style="background:#333">Sprawdź dostępność</span>'}</div>
+                    <div class="guziki">
+                        ${film.trailerUrl ? `<a href="${film.trailerUrl}" target="_blank" class="btn-trailer">▶ Zwiastun</a>` : ''}
+                        <a href="${linkOgladaj}" target="_blank" class="btn-ogladaj">🎬 Oglądaj teraz</a>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+}
+
+function reset() {
+    document.getElementById('krok2').classList.remove('active');
+    document.getElementById('krok1').classList.add('active');
+}
+</script>
+</body>
+</html>
+
+śr., 6 maj 2026, 20:37 użytkownik David Dudar <david.dudar555@gmail.com> napisał:
