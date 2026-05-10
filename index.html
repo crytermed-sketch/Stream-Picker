@@ -676,8 +676,6 @@
 
         .user-info.active { display: flex; }
 
-
-
         /* Modal Logowania */
         .modal-overlay {
             position: fixed;
@@ -801,41 +799,27 @@
         </div>
 
         <header>
-            <h1 data-t="title">STREAM PICKER <span style="font-size: 2.5rem;">🍿</span></h1>
-            <div class="subtitle" data-t="subtitle">Znajdź idealny film na wieczór w kilka sekund</div>
+            <h1 data-t="title">STREAM PICKER</h1>
+            <p class="subtitle" data-t="subtitle">Znajdź idealny film na wieczór w kilka sekund</p>
         </header>
 
-        <!-- KROK 1 -->
-        <div class="krok active" id="krok1">
-            <div class="section-title" data-t="platforms">Wybierz swoje platformy</div>
+        <div id="krok1" class="krok active">
+            <h2 class="section-title" data-t="platforms">Wybierz swoje platformy</h2>
             <div class="platformy-grid">
-                <div>
-                    <input type="checkbox" id="netflix" class="platforma-check" value="8" checked>
-                    <label for="netflix" class="platforma-label netflix-bg">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix" style="height: 28px; filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
-                    </label>
-                </div>
-                <div>
-                    <input type="checkbox" id="disney" class="platforma-check" value="337">
-                    <label for="disney" class="platforma-label disney-bg">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" style="height: 45px; filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
-                    </label>
-                </div>
-                <div>
-                    <input type="checkbox" id="hbo" class="platforma-check" value="1899">
-                    <label for="hbo" class="platforma-label hbo-bg">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/c/ce/Max_logo.svg" alt="Max" style="height: 24px; filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0,0,0,0.3));">
-                    </label>
-                </div>
-                <div>
-                    <input type="checkbox" id="prime" class="platforma-check" value="119">
-                    <label for="prime" class="platforma-label prime-bg">
-                        <img src="https://upload.wikimedia.org/wikipedia/commons/1/11/Amazon_Prime_Video_logo.svg" alt="Prime Video" style="height: 22px; filter: brightness(0) invert(1) drop-shadow(0 2px 4px rgba(0,0,0,0.3)); margin-top: 5px;">
-                    </label>
-                </div>
+                <input type="checkbox" id="p1" class="platforma-check" value="8" checked>
+                <label for="p1" class="platforma-label netflix-bg">NETFLIX</label>
+                
+                <input type="checkbox" id="p2" class="platforma-check" value="337" checked>
+                <label for="p2" class="platforma-label disney-bg">DISNEY+</label>
+                
+                <input type="checkbox" id="p3" class="platforma-check" value="1899" checked>
+                <label for="p3" class="platforma-label hbo-bg">MAX</label>
+                
+                <input type="checkbox" id="p4" class="platforma-check" value="119">
+                <label for="p4" class="platforma-label prime-bg">PRIME VIDEO</label>
             </div>
 
-            <div class="section-title" data-t="filters">Dostosuj filtry</div>
+            <h2 class="section-title" data-t="filters">Dostosuj filtry</h2>
             <div class="filtry">
                 <div class="filter-group">
                     <label class="filter-label" data-t="genre">Kategoria</label>
@@ -851,28 +835,24 @@
                         <option value="16" data-t="anim">🎨 Animacja</option>
                     </select>
                 </div>
-                
                 <div class="filter-group">
                     <label class="filter-label" data-t="type">Typ</label>
                     <select id="typ">
-                        <option value="movie" data-t="movies">🎬 Film</option>
-                        <option value="tv" data-t="series">📺 Serial</option>
+                        <option value="movie" data-t="movies">🎬 Filmy</option>
+                        <option value="tv" data-t="series">📺 Seriale</option>
                     </select>
                 </div>
-
                 <div class="filter-group">
-                    <label class="filter-label" data-t="rating">Minimalna Ocena</label>
+                    <label class="filter-label" data-t="rating">Minimalna ocena</label>
                     <select id="ocena">
                         <option value="0" data-t="any">⭐ Obojętnie</option>
-                        <option value="6">⭐ 6.0+ Niezłe</option>
-                        <option value="7">⭐ 7.0+ Dobre</option>
-                        <option value="8">⭐ 8.0+ Świetne</option>
-                        <option value="8.5">⭐ 8.5+ Arcydzieła</option>
+                        <option value="6">⭐⭐⭐⭐⭐⭐ 6+</option>
+                        <option value="7">⭐⭐⭐⭐⭐⭐⭐ 7+</option>
+                        <option value="8">⭐⭐⭐⭐⭐⭐⭐⭐ 8+</option>
                     </select>
                 </div>
-
                 <div class="filter-group">
-                    <label class="filter-label" data-t="age">Przedział Wiekowy</label>
+                    <label class="filter-label" data-t="age">Przedział wiekowy</label>
                     <select id="wiek">
                         <option value="" data-t="allAges">👨‍👩‍👧‍👦 Wszystkie wieki</option>
                         <option value="G" data-t="age7">🟢 7+ (Familijne)</option>
@@ -880,7 +860,6 @@
                         <option value="R" data-t="age18">🔴 16+ / 18+ (Dorośli)</option>
                     </select>
                 </div>
-
                 <div class="filter-group">
                     <label class="filter-label" data-t="sort">Sortowanie</label>
                     <select id="sortowanie">
@@ -891,43 +870,35 @@
                     </select>
                 </div>
             </div>
-            
+
             <div class="center">
-                <button class="btn" onclick="szukaj(false)">
-                    <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    <span data-t="search">Wyszukaj Produkcje</span>
-                </button>
+                <button class="btn" onclick="szukaj()" data-t="search">Znajdź mi coś!</button>
             </div>
         </div>
 
-        <!-- KROK 2 -->
-        <div class="krok" id="krok2">
-            <div class="section-title">
-                <span style="font-size: 1.5rem;">✨</span> <span data-t="proposals">Propozycje przygotowane dla Ciebie</span>
-            </div>
+        <div id="krok2" class="krok">
+            <h2 class="section-title" data-t="proposals">Propozycje przygotowane dla Ciebie</h2>
             <div id="wyniki"></div>
             <div class="center">
-                <button class="btn btn-random" onclick="szukaj(true)" data-t="random">
-                    🎲 Losuj ponownie
-                </button>
-                <button class="btn btn-secondary" onclick="reset()">
-                    <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                    <span data-t="changeFilters">Zmień filtry</span>
-                </button>
+                <button class="btn btn-random" onclick="szukaj(true)" data-t="random">🎲 Losuj ponownie</button>
+                <button class="btn btn-secondary" onclick="reset()" data-t="changeFilters">Zmień filtry</button>
             </div>
         </div>
     </div>
 
-    <!-- FOOTER Z AUTORAMI -->
     <footer>
         <div data-t="authorDesigned">Zaprojektowane z pasją dla miłośników kina.</div>
         <div class="authors-list">
             <div class="author-card">
-                <div class="author-avatar">C</div>
-                <span>CXRY</span>
+                <div class="author-avatar" style="background: #E50914;">N</div>
+                <span>NETFLIX</span>
             </div>
             <div class="author-card">
-                <div class="author-avatar">JE</div>
+                <div class="author-avatar" style="background: #0063e5;">D</div>
+                <span>DISNEY</span>
+            </div>
+            <div class="author-card">
+                <div class="author-avatar" style="background: #000;">JE</div>
                 <span>JEFFREY EPSTEIN</span>
             </div>
         </div>
@@ -936,11 +907,12 @@
         </div>
     </footer>
 
-<!-- Firebase SDK (Compat version for easier integration) -->
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
-
-<script>
+    <!-- Firebase SDK (Compat version) -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+    
+    <!-- Główne skrypty -->
+    <script>
 // WKLEJ SWOJE DANE Z FIREBASE PONIŻEJ
 // Klucz został zakodowany, aby skanery GitHub nie wysyłały fałszywych ostrzeżeń.
 // Prawdziwe bezpieczeństwo zapewnia ograniczenie domen w konsoli Firebase.
@@ -1107,7 +1079,7 @@ const translations = {
         watchNow: "立即观看",
         trailer: "预告片",
         searching: "正在寻找电影精华...",
-        noResults: "很抱歉，没有找到符合条件的电影。",
+        noResults: "很抱ecz,没有找到符合条件的电影。",
         noResultsDesc: "请尝试放宽筛选条件。",
         authorDesigned: "为电影爱好者倾情打造。",
         tmdb: "数据由 TMDB API 提供。可用性因地区而异。",
@@ -1195,15 +1167,14 @@ function login(method) {
     if (method === 'email') {
         const email = document.getElementById('login-email').value;
         const pass = document.getElementById('login-password').value;
-        if (!email || !pass) return alert("Wpisz email i hasło!");
+        if (!email || pass.length < 6) return alert("Wpisz poprawny email i hasło (min. 6 znaków)!");
         
         auth.signInWithEmailAndPassword(email, pass)
             .then(() => closeLoginModal())
             .catch(err => {
-                if (err.code === 'auth/user-not-found') {
-                    return auth.createUserWithEmailAndPassword(email, pass).then(() => closeLoginModal());
-                }
-                alert(err.message);
+                auth.createUserWithEmailAndPassword(email, pass)
+                    .then(() => closeLoginModal())
+                    .catch(regErr => alert("Błąd: " + regErr.message));
             });
         return;
     }
@@ -1295,7 +1266,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Inicjalizacja języka
     const sysLang = (navigator.language || 'pl').split('-')[0];
     currentLang = localStorage.getItem('currentLang') || (translations[sysLang] ? sysLang : 'pl');
     updateUI();
@@ -1310,6 +1280,8 @@ const PLATFORMY = {
     119: { nazwa: 'Prime Video' }
 };
 
+const movieCache = {};
+
 async function szukaj(losuj = false) {
     if (!currentUser && searchesRemaining <= 0) {
         openLoginModal();
@@ -1317,7 +1289,6 @@ async function szukaj(losuj = false) {
     }
 
     const zaznaczone = Array.from(document.querySelectorAll('.platforma-check:checked')).map(el => el.value);
-    
     if (zaznaczone.length === 0) {
         alert(currentLang === 'pl' ? 'Proszę zaznaczyć przynajmniej jedną platformę!' : 'Please select at least one platform!');
         return;
@@ -1343,22 +1314,12 @@ async function szukaj(losuj = false) {
     
     document.getElementById('krok1').classList.remove('active');
     document.getElementById('krok2').classList.add('active');
-    document.getElementById('wyniki').innerHTML = `
-        <div class="loader">
-            <div class="spinner"></div>
-            <div>${t.searching}</div>
-        </div>
-    `;
+    document.getElementById('wyniki').innerHTML = `<div class="loader"><div class="spinner"></div><div>${t.searching}</div></div>`;
     
     const providers = zaznaczone.join('|');
     const genreParam = gatunek ? `&with_genres=${gatunek}` : '';
     const ratingParam = minOcena > 0 ? `&vote_average.gte=${minOcena}&vote_count.gte=100` : '&vote_count.gte=30';
-    
-    let ageParam = '';
-    if (wiek) {
-        ageParam = `&certification_country=US&certification.lte=${wiek}`;
-    }
-    
+    let ageParam = wiek ? `&certification_country=US&certification.lte=${wiek}` : '';
     const dateLimit = `&primary_release_date.lte=${new Date().toISOString().split('T')[0]}`;
     const page = losuj ? Math.floor(Math.random() * 5) + 1 : 1;
 
@@ -1367,33 +1328,25 @@ async function szukaj(losuj = false) {
     try {
         const res = await fetch(url);
         const data = await res.json();
-        
         if (!data.results || data.results.length === 0) {
-            document.getElementById('wyniki').innerHTML = `
-                <div class="error">
-                    <div style="font-size: 3rem; margin-bottom: 10px;">😢</div>
-                    ${t.noResults}<br>
-                    ${t.noResultsDesc}
-                </div>`;
+            document.getElementById('wyniki').innerHTML = `<div class="error"><div style="font-size: 3rem; margin-bottom: 10px;">😢</div>${t.noResults}<br>${t.noResultsDesc}</div>`;
             return;
         }
         
         const potasowane = data.results.sort(() => Math.random() - 0.5).slice(0, 12);
-        
-        const filmyZDanych = await Promise.all(
-            potasowane.map(async (film) => {
-                const [trailerUrl, watchData, releaseData, creditsData] = await Promise.all([
-                    pobierzZwiastun(film.id, typ),
-                    pobierzDanePlatform(film.id, typ),
-                    wiek ? pobierzCertyfikat(film.id, typ) : Promise.resolve(null),
-                    pobierzZaloge(film.id, typ)
-                ]);
-                return {...film, trailerUrl, watchData, certyfikat: releaseData, autorzy: creditsData};
-            })
-        );
-        
+        const filmyZDanych = await Promise.all(potasowane.map(async (film) => {
+            if (movieCache[film.id]) return movieCache[film.id];
+            const [trailerUrl, watchData, releaseData, creditsData] = await Promise.all([
+                pobierzZwiastun(film.id, typ),
+                pobierzDanePlatform(film.id, typ),
+                wiek ? pobierzCertyfikat(film.id, typ) : Promise.resolve(null),
+                pobierzZaloge(film.id, typ)
+            ]);
+            const filmZDetalmi = {...film, trailerUrl, watchData, certyfikat: releaseData, autorzy: creditsData};
+            movieCache[film.id] = filmZDetalmi;
+            return filmZDetalmi;
+        }));
         wyswietlWyniki(filmyZDanych, typ);
-        
     } catch (error) {
         console.error(error);
         document.getElementById('wyniki').innerHTML = '<div class="error">API Error.</div>';
@@ -1402,16 +1355,13 @@ async function szukaj(losuj = false) {
 
 async function pobierzZaloge(id, typ) {
     try {
+        const url = typ === 'movie' ? `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${TMDB_API_KEY}` : `https://api.themoviedb.org/3/tv/${id}?api_key=${TMDB_API_KEY}`;
+        const res = await fetch(url);
+        const data = await res.json();
         if (typ === 'movie') {
-            const url = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${TMDB_API_KEY}`;
-            const res = await fetch(url);
-            const data = await res.json();
             const reżyserzy = data.crew?.filter(c => c.job === 'Director').map(c => c.name);
             return reżyserzy?.length ? `${currentLang === 'pl' ? 'Reżyseria' : 'Director'}: ${reżyserzy.slice(0, 2).join(', ')}` : null;
         } else {
-            const url = `https://api.themoviedb.org/3/tv/${id}?api_key=${TMDB_API_KEY}`;
-            const res = await fetch(url);
-            const data = await res.json();
             const tworcy = data.created_by?.map(c => c.name);
             return tworcy?.length ? `${currentLang === 'pl' ? 'Twórca' : 'Creator'}: ${tworcy.slice(0, 2).join(', ')}` : null;
         }
@@ -1424,15 +1374,8 @@ async function pobierzCertyfikat(id, typ) {
         const url = `https://api.themoviedb.org/3/${typ}/${id}/${endpoint}?api_key=${TMDB_API_KEY}`;
         const res = await fetch(url);
         const data = await res.json();
-        
-        if(typ === 'movie') {
-            const usRating = data.results?.find(r => r.iso_3166_1 === 'US');
-            if(usRating && usRating.release_dates.length > 0) return usRating.release_dates[0].certification;
-        } else {
-            const usRating = data.results?.find(r => r.iso_3166_1 === 'US');
-            if(usRating) return usRating.rating;
-        }
-        return null;
+        const usRating = data.results?.find(r => r.iso_3166_1 === 'US');
+        return typ === 'movie' ? (usRating?.release_dates[0]?.certification || null) : (usRating?.rating || null);
     } catch { return null; }
 }
 
@@ -1463,21 +1406,10 @@ function wyswietlWyniki(filmy, typ) {
     filmy.forEach(film => {
         const tytul = film.title || film.name;
         const rok = (film.release_date || film.first_air_date || '').slice(0, 4);
-        const okladka = film.poster_path 
-            ? `https://image.tmdb.org/t/p/w500${film.poster_path}` 
-            : 'https://via.placeholder.com/500x750/1e1e23/ffffff?text=Brak+plakatu';
-        
+        const okladka = film.poster_path ? `https://image.tmdb.org/t/p/w500${film.poster_path}` : 'https://via.placeholder.com/500x750/1e1e23/ffffff?text=Brak+plakatu';
         const dostepne = film.watchData?.flatrate || [];
-        const platformyBadges = dostepne
-            .filter(p => PLATFORMY[p.provider_id])
-            .map(p => `<img src="https://image.tmdb.org/t/p/original${p.logo_path}" alt="${PLATFORMY[p.provider_id].nazwa}">`)
-            .join('');
-            
-        const platformNames = dostepne
-            .filter(p => PLATFORMY[p.provider_id])
-            .map(p => PLATFORMY[p.provider_id].nazwa)
-            .join(', ');
-            
+        const platformyBadges = dostepne.filter(p => PLATFORMY[p.provider_id]).map(p => `<img src="https://image.tmdb.org/t/p/original${p.logo_path}" alt="${PLATFORMY[p.provider_id].nazwa}">`).join('');
+        const platformNames = dostepne.filter(p => PLATFORMY[p.provider_id]).map(p => PLATFORMY[p.provider_id].nazwa).join(', ');
         const ageBadge = film.certyfikat ? `<span class="age-rating">${film.certyfikat}</span>` : '';
         
         let linkOgladaj = `https://www.justwatch.com/pl/szukaj?q=${encodeURIComponent(tytul)}`;
@@ -1507,15 +1439,8 @@ function wyswietlWyniki(filmy, typ) {
                         ${platformNames ? `<span style="color: var(--text-dim); font-size: 0.8rem; font-weight: 600; opacity: 0.7;">• ${platformNames}</span>` : ''}
                     </div>
                     <div class="guziki">
-                        ${film.trailerUrl ? `
-                        <a href="${film.trailerUrl}" target="_blank" class="btn-trailer">
-                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            ${t.trailer}
-                        </a>` : ''}
-                        <a href="${linkOgladaj}" target="_blank" class="btn-ogladaj">
-                            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                            ${t.watchNow}
-                        </a>
+                        ${film.trailerUrl ? `<a href="${film.trailerUrl}" target="_blank" class="btn-trailer"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>${t.trailer}</a>` : ''}
+                        <a href="${linkOgladaj}" target="_blank" class="btn-ogladaj"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>${t.watchNow}</a>
                     </div>
                 </div>
             </div>`;
@@ -1529,4 +1454,3 @@ function reset() {
 </script>
 </body>
 </html>
- 
