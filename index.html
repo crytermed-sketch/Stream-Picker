@@ -773,6 +773,9 @@
                 <input type="email" id="login-email" placeholder="Email" data-t="email" style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; margin-bottom: 10px;">
                 <input type="password" id="login-password" placeholder="Hasło" data-t="password" style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; margin-bottom: 15px;">
                 <button class="login-btn" style="width: 100%; padding: 12px;" onclick="login('email')" data-t="loginWithEmail">Zaloguj e-mailem</button>
+                <div style="text-align: center; margin-top: 10px;">
+                    <a href="#" onclick="resetPassword()" style="font-size: 0.8rem; color: var(--primary); text-decoration: none;">Zapomniałeś hasła?</a>
+                </div>
                 <p style="font-size: 0.7rem; color: var(--text-dim); margin-top: 10px; text-align: center;" data-t="noAccount">Nie masz konta? Zostanie utworzone automatycznie.</p>
             </div>
             
@@ -1172,23 +1175,36 @@ function login(method) {
         auth.signInWithEmailAndPassword(email, pass)
             .then(() => closeLoginModal())
             .catch(err => {
-                auth.createUserWithEmailAndPassword(email, pass)
-                    .then(() => closeLoginModal())
-                    .catch(regErr => alert("Błąd: " + regErr.message));
+                if (err.code === 'auth/user-not-found') {
+                    auth.createUserWithEmailAndPassword(email, pass)
+                        .then((userCredential) => {
+                            userCredential.user.sendEmailVerification();
+                            alert("Konto utworzone! Wysłaliśmy e-mail weryfikacyjny.");
+                            closeLoginModal();
+                        })
+                        .catch(regErr => alert("Błąd rejestracji: " + regErr.message));
+                } else {
+                    alert("Błąd logowania: " + err.message);
+                }
             });
         return;
     }
 
-    const provider = method === 'google' 
-        ? new firebase.auth.GoogleAuthProvider() 
-        : new firebase.auth.OAuthProvider('apple.com');
-        
     auth.signInWithPopup(provider).then(() => {
         closeLoginModal();
     }).catch(err => {
         console.error(err);
         alert("Błąd logowania: " + err.message);
     });
+}
+
+function resetPassword() {
+    const email = document.getElementById('login-email').value;
+    if (!email) return alert("Wpisz swój e-mail, aby zresetować hasło!");
+    
+    auth.sendPasswordResetEmail(email)
+        .then(() => alert("E-mail do resetowania hasła został wysłany! Sprawdź skrzynkę."))
+        .catch(err => alert("Błąd: " + err.message));
 }
 
 function logout() {
