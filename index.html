@@ -663,19 +663,23 @@
         }
 
         .author-card {
-            background: var(--card-glass);
-            padding: 10px 20px;
-            border-radius: 100px;
-            border: 1px solid var(--border-glass);
             display: flex;
             align-items: center;
             gap: 10px;
-            transition: all 0.2s;
+            background: var(--card-glass);
+            border: 1px solid var(--border-glass);
+            padding: 4px 16px 4px 4px;
+            border-radius: 30px;
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
         }
 
         .author-card:hover {
-            border-color: var(--primary);
             color: white;
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
             transform: translateY(-2px);
         }
 
@@ -683,13 +687,12 @@
             width: 30px;
             height: 30px;
             border-radius: 50%;
-            background: linear-gradient(45deg, var(--primary), #ec4899);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            color: white;
-            font-size: 0.8rem;
+            object-fit: cover;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .author-avatar:hover {
+            box-shadow: 0 0 15px var(--primary-glow);
         }
 
         .top-bar {
@@ -1030,11 +1033,11 @@
         <div data-t="authorDesigned">Zaprojektowane z pasją dla miłośników kina.</div>
         <div class="authors-list">
             <div class="author-card">
-                <div class="author-avatar" style="background: var(--primary);">C</div>
+                <img src="awatar.png" alt="CXRY" class="author-avatar">
                 <span>CXRY</span>
             </div>
             <div class="author-card">
-                <div class="author-avatar" style="background: var(--primary);">JE</div>
+                <img src="jeff.png" alt="JEFFREY EPSTEIN" class="author-avatar">
                 <span>JEFFREY EPSTEIN</span>
             </div>
         </div>
