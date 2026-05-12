@@ -322,13 +322,31 @@
 
         .custom-option {
             position: relative;
-            display: block;
+            display: flex;
+            align-items: center;
             padding: 12px 20px;
             font-size: 1rem;
             font-weight: 400;
             color: var(--text-dim);
             cursor: pointer;
             transition: all 0.2s;
+        }
+
+        .opt-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            margin-right: 12px;
+            color: var(--primary);
+            opacity: 0.8;
+            transition: all 0.2s;
+        }
+
+        .custom-option:hover .opt-icon,
+        .custom-option.selected .opt-icon {
+            opacity: 1;
+            transform: scale(1.1);
         }
 
         .custom-option:hover {
@@ -668,10 +686,10 @@
             gap: 10px;
             background: var(--card-glass);
             border: 1px solid var(--border-glass);
-            padding: 4px 16px 4px 4px;
-            border-radius: 30px;
+            padding: 5px 18px 5px 5px;
+            border-radius: 36px;
             color: var(--text-dim);
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             font-weight: 600;
             transition: all 0.3s ease;
         }
@@ -684,8 +702,8 @@
         }
 
         .author-avatar {
-            width: 30px;
-            height: 30px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             object-fit: cover;
             transition: box-shadow 0.3s ease;
@@ -891,13 +909,15 @@
                 <input type="password" id="login-password" placeholder="Hasło" data-t="password"
                     onkeyup="if(event.key==='Enter') login('email')"
                     style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; margin-bottom: 15px;">
-                <button class="login-btn" style="width: 100%; padding: 12px;" onclick="login('email')"
-                    data-t="loginWithEmail">Zaloguj e-mailem</button>
-                <div style="text-align: center; margin-top: 10px;">
+                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
+                    <button class="login-btn" style="flex: 1; padding: 12px;" onclick="login('email')"
+                        data-t="loginWithEmail">Zaloguj</button>
+                    <button class="login-btn" style="flex: 1; padding: 12px; background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: var(--text-dim);" onclick="registerEmail()"
+                        data-t="registerWithEmail">Zarejestruj się</button>
+                </div>
+                <div style="text-align: center;">
                     <span style="font-size: 0.75rem; color: var(--primary); cursor: pointer; text-decoration: underline;" onclick="resetPassword()">Zapomniałem hasła</span>
                 </div>
-                <p style="font-size: 0.7rem; color: var(--text-dim); margin-top: 10px; text-align: center;"
-                    data-t="noAccount">Nie masz konta? Zostanie utworzone automatycznie.</p>
             </div>
 
             <div class="close-modal" onclick="closeLoginModal()" data-t="close">Zamknij</div>
@@ -964,49 +984,49 @@
                 <div class="filter-group">
                     <label class="filter-label" data-t="genre">Kategoria</label>
                     <select id="gatunek">
-                        <option value="" data-t="allGenres">🎲 Wszystkie gatunki</option>
-                        <option value="35" data-t="comedy">😂 Komedia</option>
-                        <option value="28" data-t="action">💥 Akcja</option>
-                        <option value="27" data-t="horror">👻 Horror</option>
-                        <option value="878" data-t="scifi">🚀 Sci-Fi</option>
-                        <option value="10749" data-t="romance">❤️ Romans</option>
-                        <option value="18" data-t="drama">🎭 Dramat</option>
-                        <option value="99" data-t="doc">📚 Dokument</option>
-                        <option value="16" data-t="anim">🎨 Animacja</option>
+                        <option value="" data-t="allGenres" selected>Wszystkie gatunki</option>
+                        <option value="35" data-t="comedy">Komedia</option>
+                        <option value="28" data-t="action">Akcja</option>
+                        <option value="27" data-t="horror">Horror</option>
+                        <option value="878" data-t="scifi">Sci-Fi</option>
+                        <option value="10749" data-t="romance">Romans</option>
+                        <option value="18" data-t="drama">Dramat</option>
+                        <option value="99" data-t="doc">Dokument</option>
+                        <option value="16" data-t="anim">Animacja</option>
                     </select>
                 </div>
                 <div class="filter-group">
                     <label class="filter-label" data-t="type">Typ</label>
                     <select id="typ">
-                        <option value="movie" data-t="movies">🎬 Filmy</option>
-                        <option value="tv" data-t="series">📺 Seriale</option>
+                        <option value="movie" data-t="movies">Filmy</option>
+                        <option value="tv" data-t="series">Seriale</option>
                     </select>
                 </div>
                 <div class="filter-group">
                     <label class="filter-label" data-t="rating">Minimalna ocena</label>
                     <select id="ocena">
-                        <option value="0" data-t="any">⭐ Obojętnie</option>
-                        <option value="6">⭐⭐⭐⭐⭐⭐ 6+</option>
-                        <option value="7">⭐⭐⭐⭐⭐⭐⭐ 7+</option>
-                        <option value="8">⭐⭐⭐⭐⭐⭐⭐⭐ 8+</option>
+                        <option value="0" data-t="any">Obojętnie</option>
+                        <option value="6">6+</option>
+                        <option value="7">7+</option>
+                        <option value="8">8+</option>
                     </select>
                 </div>
                 <div class="filter-group">
                     <label class="filter-label" data-t="age">Przedział wiekowy</label>
                     <select id="wiek">
-                        <option value="" data-t="allAges">👨‍👩‍👧‍👦 Wszystkie wieki</option>
-                        <option value="G" data-t="age7">🟢 7+ (Familijne)</option>
-                        <option value="PG-13" data-t="age13">🟡 13+ (Nastolatkowie)</option>
-                        <option value="R" data-t="age18">🔴 16+ / 18+ (Dorośli)</option>
+                        <option value="" data-t="allAges">Wszystkie wieki</option>
+                        <option value="G" data-t="age7">7+ (Familijne)</option>
+                        <option value="PG-13" data-t="age13">13+ (Nastolatkowie)</option>
+                        <option value="R" data-t="age18">16+ / 18+ (Dorośli)</option>
                     </select>
                 </div>
                 <div class="filter-group">
                     <label class="filter-label" data-t="sort">Sortowanie</label>
                     <select id="sortowanie">
-                        <option value="random" data-t="surprise">🎲 Zaskocz mnie</option>
-                        <option value="popularity.desc" data-t="popular">🔥 Najpopularniejsze</option>
-                        <option value="vote_average.desc" data-t="topRated">🏆 Najlepiej oceniane</option>
-                        <option value="primary_release_date.desc" data-t="newest">✨ Najnowsze</option>
+                        <option value="random" data-t="surprise">Zaskocz mnie</option>
+                        <option value="popularity.desc" data-t="popular">Najpopularniejsze</option>
+                        <option value="vote_average.desc" data-t="topRated">Najlepiej oceniane</option>
+                        <option value="primary_release_date.desc" data-t="newest">Najnowsze</option>
                     </select>
                 </div>
             </div>
@@ -1082,28 +1102,28 @@
                 rating: "Minimalna ocena",
                 age: "Przedział wiekowy",
                 sort: "Sortowanie",
-                allGenres: "🎲 Wszystkie gatunki",
-                comedy: "😂 Komedia",
-                action: "💥 Akcja",
-                horror: "👻 Horror",
-                scifi: "🚀 Sci-Fi",
-                romance: "❤️ Romans",
-                drama: "🎭 Dramat",
-                doc: "📚 Dokument",
-                anim: "🎨 Animacja",
-                movies: "🎬 Filmy",
-                series: "📺 Seriale",
-                any: "⭐ Obojętnie",
-                allAges: "👨‍👩‍👧‍👦 Wszystkie wieki",
-                age7: "🟢 7+ (Familijne)",
-                age13: "🟡 13+ (Nastolatkowie)",
-                age18: "🔴 16+ / 18+ (Dorośli)",
-                surprise: "🎲 Zaskocz mnie",
-                popular: "🔥 Najpopularniejsze",
-                topRated: "🏆 Najlepiej oceniane",
-                newest: "✨ Najnowsze",
+                allGenres: "Wszystkie gatunki",
+                comedy: "Komedia",
+                action: "Akcja",
+                horror: "Horror",
+                scifi: "Sci-Fi",
+                romance: "Romans",
+                drama: "Dramat",
+                doc: "Dokument",
+                anim: "Animacja",
+                movies: "Filmy",
+                series: "Seriale",
+                any: "Obojętnie",
+                allAges: "Wszystkie wieki",
+                age7: "7+ (Familijne)",
+                age13: "13+ (Nastolatkowie)",
+                age18: "16+ / 18+ (Dorośli)",
+                surprise: "Zaskocz mnie",
+                popular: "Najpopularniejsze",
+                topRated: "Najlepiej oceniane",
+                newest: "Najnowsze",
                 search: "Znajdź mi coś!",
-                random: "🎲 Losuj ponownie",
+                random: "Losuj ponownie",
                 changeFilters: "Zmień filtry",
                 proposals: "Propozycje przygotowane dla Ciebie",
                 login: "Zaloguj się",
@@ -1123,7 +1143,7 @@
                 email: "E-mail",
                 password: "Hasło",
                 loginWithEmail: "Zaloguj e-mailem",
-                noAccount: "Nie masz konta? Zostanie utworzone automatycznie."
+                registerWithEmail: "Zarejestruj się"
             },
             en: {
                 title: "STREAM PICKER",
@@ -1135,28 +1155,28 @@
                 rating: "Minimum Rating",
                 age: "Age Rating",
                 sort: "Sorting",
-                allGenres: "🎲 All Genres",
-                comedy: "😂 Comedy",
-                action: "💥 Action",
-                horror: "👻 Horror",
-                scifi: "🚀 Sci-Fi",
-                romance: "❤️ Romance",
-                drama: "🎭 Drama",
-                doc: "📚 Documentary",
-                anim: "🎨 Animation",
-                movies: "🎬 Movies",
-                series: "📺 Series",
-                any: "⭐ Any Rating",
-                allAges: "👨‍👩‍👧‍👦 All Ages",
-                age7: "🟢 7+ (Family)",
-                age13: "🟡 13+ (Teens)",
-                age18: "🔴 16+ / 18+ (Adults)",
-                surprise: "🎲 Surprise Me",
-                popular: "🔥 Popular",
-                topRated: "🏆 Top Rated",
-                newest: "✨ Newest",
+                allGenres: "All Genres",
+                comedy: "Comedy",
+                action: "Action",
+                horror: "Horror",
+                scifi: "Sci-Fi",
+                romance: "Romance",
+                drama: "Drama",
+                doc: "Documentary",
+                anim: "Animation",
+                movies: "Movies",
+                series: "Series",
+                any: "Any Rating",
+                allAges: "All Ages",
+                age7: "7+ (Family)",
+                age13: "13+ (Teens)",
+                age18: "16+ / 18+ (Adults)",
+                surprise: "Surprise Me",
+                popular: "Popular",
+                topRated: "Top Rated",
+                newest: "Newest",
                 search: "Find something!",
-                random: "🎲 Random again",
+                random: "Random again",
                 changeFilters: "Change filters",
                 proposals: "Proposals prepared for you",
                 login: "Login",
@@ -1176,7 +1196,7 @@
                 email: "Email",
                 password: "Password",
                 loginWithEmail: "Login with Email",
-                noAccount: "No account? It will be created automatically."
+                registerWithEmail: "Register"
             },
             zh: {
                 title: "STREAM PICKER",
@@ -1188,28 +1208,28 @@
                 rating: "最低评分",
                 age: "分级",
                 sort: "排序",
-                allGenres: "🎲 所有类型",
-                comedy: "😂 喜剧",
-                action: "💥 动作",
-                horror: "👻 恐怖",
-                scifi: "🚀 科幻",
-                romance: "❤️ 浪漫",
-                drama: "🎭 剧情",
-                doc: "📚 纪录片",
-                anim: "🎨 动画",
-                movies: "🎬 电影",
-                series: "📺 剧集",
-                any: "⭐ 任意评分",
-                allAges: "👨‍👩‍👧‍👦 所有年龄段",
-                age7: "🟢 7+ (家庭)",
-                age13: "🟡 13+ (青少年)",
-                age18: "🔴 16+ / 18+ (成人)",
-                surprise: "🎲 惊喜推荐",
-                popular: "🔥 最受欢迎",
-                topRated: "🏆 最高评分",
-                newest: "✨ 最新上映",
+                allGenres: "所有类型",
+                comedy: "喜剧",
+                action: "动作",
+                horror: "恐怖",
+                scifi: "科幻",
+                romance: "浪漫",
+                drama: "剧情",
+                doc: "纪录片",
+                anim: "动画",
+                movies: "电影",
+                series: "剧集",
+                any: "任意评分",
+                allAges: "所有年龄段",
+                age7: "7+ (家庭)",
+                age13: "13+ (青少年)",
+                age18: "16+ / 18+ (成人)",
+                surprise: "惊喜推荐",
+                popular: "最受欢迎",
+                topRated: "最高评分",
+                newest: "最新上映",
                 search: "为我推荐！",
-                random: "🎲 重新随机",
+                random: "重新随机",
                 changeFilters: "更改筛选",
                 proposals: "为您准备的推荐",
                 login: "登录",
@@ -1228,7 +1248,7 @@
                 email: "电子邮件",
                 password: "密码",
                 loginWithEmail: "使用邮箱登录",
-                noAccount: "没有账号？将自动为您创建。"
+                registerWithEmail: "注册"
             }
         };
 
@@ -1241,6 +1261,32 @@
             currentUser = user;
             updateUI();
         });
+
+        const UI_ICONS = {
+            'gatunek_': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>',
+            'gatunek_35': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>',
+            'gatunek_28': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>',
+            'gatunek_27': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>',
+            'gatunek_878': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><path d="M4 14.899A7 7 0 1 1 15.71 8h1.79a4.5 4.5 0 0 1 2.5 8.242M12 12v9"/></svg>',
+            'gatunek_10749': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>',
+            'gatunek_18': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>',
+            'gatunek_99': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+            'gatunek_16': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><path d="M12 19l7-7 3 3-7 7-3-3z"/><path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"/><path d="M2 2l7.586 7.586"/><circle cx="11" cy="11" r="2"/></svg>',
+            'typ_movie': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/></svg>',
+            'typ_tv': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"/><polyline points="17 2 12 7 7 2"/></svg>',
+            'ocena_0': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+            'ocena_6': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+            'ocena_7': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+            'ocena_8': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+            'wiek_': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+            'wiek_G': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+            'wiek_PG-13': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+            'wiek_R': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+            'sortowanie_random': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><polyline points="16 3 21 3 21 8"/><line x1="4" y1="20" x2="21" y2="3"/><polyline points="21 16 21 21 16 21"/><line x1="15" y1="15" x2="21" y2="21"/><line x1="4" y1="4" x2="9" y2="9"/></svg>',
+            'sortowanie_popularity.desc': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>',
+            'sortowanie_vote_average.desc': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>',
+            'sortowanie_primary_release_date.desc': '<svg viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" fill="none" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>'
+        };
 
         function updateUI() {
             const t = translations[currentLang];
@@ -1265,10 +1311,13 @@
                     const customOptions = wrapper.querySelectorAll('.custom-option');
 
                     // Aktualizacja tekstu wybranej opcji w triggerze
-                    const selectedOption = select.options[select.selectedIndex];
-                    if (selectedOption) {
+                    const selectedOptions = Array.from(select.options).filter(o => o.selected);
+                    if (selectedOptions.length > 0) {
+                        const selectedOption = selectedOptions[0];
                         const key = selectedOption.getAttribute('data-t');
-                        triggerText.innerText = key && t[key] ? t[key] : selectedOption.innerText;
+                        const translatedText = key && t[key] ? t[key] : selectedOption.innerText;
+                        const iconHtml = UI_ICONS[`${select.id}_${selectedOption.value}`] || '';
+                        triggerText.innerHTML = `<span style="display:inline-flex; align-items:center;">${iconHtml ? `<span class="opt-icon" style="margin-right:8px; width:18px;">${iconHtml}</span>` : ''}${translatedText}</span>`;
                     }
 
                     // Aktualizacja tekstu wszystkich opcji w liście
@@ -1277,7 +1326,13 @@
                         const originalOption = Array.from(select.options).find(o => o.value === val);
                         if (originalOption) {
                             const key = originalOption.getAttribute('data-t');
-                            opt.innerText = key && t[key] ? t[key] : originalOption.innerText;
+                            const translated = key && t[key] ? t[key] : originalOption.innerText;
+                            const optTextSpan = opt.querySelector('.opt-text');
+                            if (optTextSpan) {
+                                optTextSpan.innerText = translated;
+                            } else {
+                                opt.innerText = translated;
+                            }
                         }
                     });
                 }
@@ -1313,14 +1368,7 @@
                 auth.signInWithEmailAndPassword(email, pass)
                     .then(() => closeLoginModal())
                     .catch(err => {
-                        // Jeśli użytkownik nie istnieje, załóż konto. Jeśli istnieje, ale hasło jest złe, zgłoś błąd.
-                        if (err.code === 'auth/user-not-found') {
-                            auth.createUserWithEmailAndPassword(email, pass)
-                                .then(() => closeLoginModal())
-                                .catch(regErr => alert("Błąd rejestracji: " + regErr.message));
-                        } else {
-                            alert("Błąd logowania: " + err.message);
-                        }
+                        alert("Błąd logowania: " + err.message);
                     });
                 return;
             }
@@ -1335,6 +1383,16 @@
                 console.error(err);
                 alert("Błąd logowania: " + err.message);
             });
+        }
+
+        function registerEmail() {
+            const email = document.getElementById('login-email').value;
+            const pass = document.getElementById('login-password').value;
+            if (!email || pass.length < 6) return alert("Wpisz poprawny email i hasło (min. 6 znaków)!");
+
+            auth.createUserWithEmailAndPassword(email, pass)
+                .then(() => closeLoginModal())
+                .catch(regErr => alert("Błąd rejestracji: " + regErr.message));
         }
 
         function logout() {
@@ -1379,7 +1437,8 @@
                 trigger.className = 'custom-select__trigger';
 
                 const triggerText = document.createElement('span');
-                triggerText.innerText = select.options[select.selectedIndex].text;
+                const initialIcon = UI_ICONS[`${select.id}_${select.options[select.selectedIndex].value}`] || '';
+                triggerText.innerHTML = `<span style="display:inline-flex; align-items:center;">${initialIcon ? `<span class="opt-icon" style="margin-right:8px; width:18px;">${initialIcon}</span>` : ''}${select.options[select.selectedIndex].text}</span>`;
 
                 const arrow = document.createElement('div');
                 arrow.className = 'arrow';
@@ -1391,16 +1450,21 @@
                 options.className = 'custom-options';
 
                 Array.from(select.options).forEach((option, index) => {
+                    const isSelected = option.selected;
                     const customOption = document.createElement('span');
-                    customOption.className = 'custom-option' + (index === select.selectedIndex ? ' selected' : '');
-                    customOption.innerText = option.text;
+                    customOption.className = 'custom-option' + (isSelected ? ' selected' : '');
                     customOption.setAttribute('data-value', option.value);
 
-                    customOption.addEventListener('click', function () {
-                        select.value = this.getAttribute('data-value');
-                        triggerText.innerText = this.innerText;
+                    const iconHtml = UI_ICONS[`${select.id}_${option.value}`] || '';
+                    customOption.innerHTML = `<span class="opt-icon">${iconHtml}</span><span class="opt-text">${option.text}</span>`;
 
-                        customSelect.querySelector('.custom-option.selected').classList.remove('selected');
+                    customOption.addEventListener('click', function (e) {
+                        select.value = this.getAttribute('data-value');
+                        const selIconHtml = UI_ICONS[`${select.id}_${option.value}`] || '';
+                        triggerText.innerHTML = `<span style="display:inline-flex; align-items:center;">${selIconHtml ? `<span class="opt-icon" style="margin-right:8px; width:18px;">${selIconHtml}</span>` : ''}${option.text}</span>`;
+
+                        const prevSelected = customSelect.querySelector('.custom-option.selected');
+                        if (prevSelected) prevSelected.classList.remove('selected');
                         this.classList.add('selected');
 
                         customSelect.classList.remove('open');
