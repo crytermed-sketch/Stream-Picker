@@ -1040,44 +1040,55 @@
 <body>
     <div class="modal-overlay" id="loginModal">
         <div class="modal">
-            <h2 data-t="login">Zaloguj się</h2>
-            <p data-t="mustLogin">Osiągnięto limit 3 wyszukiwań. Zaloguj się, aby kontynuować bez limitów!</p>
+            <h2 id="modal-title" data-t="login">Zaloguj się</h2>
+            <p id="modal-desc" data-t="mustLogin">Osiągnięto limit 3 wyszukiwań. Zaloguj się, aby kontynuować bez limitów!</p>
 
-            <button class="social-btn google" onclick="login('google')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
-                <span data-t="loginGoogle">Zaloguj za pomocą Google</span>
-            </button>
+            <div id="social-login-area">
+                <button class="social-btn google" onclick="login('google')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
+                    <span data-t="loginGoogle">Zaloguj za pomocą Google</span>
+                </button>
 
-            <button class="social-btn apple" onclick="login('apple')">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple"
-                    style="filter: invert(1);">
-                <span data-t="loginApple">Zaloguj za pomocą Apple</span>
-            </button>
+                <button class="social-btn apple" onclick="login('apple')">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple"
+                        style="filter: invert(1);">
+                    <span data-t="loginApple">Zaloguj za pomocą Apple</span>
+                </button>
 
-            <div style="margin: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative;">
-                <span
-                    style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #15151a; padding: 0 10px; font-size: 0.8rem; color: var(--text-dim);">OR</span>
+                <div style="margin: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); position: relative;">
+                    <span
+                        style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #15151a; padding: 0 10px; font-size: 0.8rem; color: var(--text-dim);">LUB</span>
+                </div>
             </div>
 
             <div style="text-align: left;">
                 <input type="email" id="login-email" placeholder="Email" data-t="email"
-                    onkeyup="if(event.key==='Enter') login('email')"
                     style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; margin-bottom: 10px;">
                 <input type="password" id="login-password" placeholder="Hasło" data-t="password"
-                    onkeyup="if(event.key==='Enter') login('email')"
                     style="width: 100%; padding: 12px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; margin-bottom: 15px;">
-                <div style="display: flex; gap: 10px; margin-bottom: 10px;">
-                    <button class="login-btn" style="flex: 1; padding: 12px;" onclick="login('email')"
-                        data-t="loginWithEmail">Zaloguj</button>
-                    <button class="login-btn" style="flex: 1; padding: 12px; background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: var(--text-dim);" onclick="registerEmail()"
-                        data-t="registerWithEmail">Zarejestruj się</button>
+                
+                <div id="login-action-area">
+                    <button class="login-btn" style="width: 100%; padding: 12px; margin-bottom: 15px;" onclick="login('email')" data-t="loginWithEmail">Zaloguj</button>
+                    <div style="text-align: center; color: var(--text-dim); font-size: 0.85rem;">
+                        <span data-t="noAccount">Nie masz konta?</span> 
+                        <span style="color: var(--primary); cursor: pointer; text-decoration: underline;" onclick="setAuthMode('register')" data-t="register">Zarejestruj się</span>
+                    </div>
                 </div>
-                <div style="text-align: center;">
-                    <span style="font-size: 0.75rem; color: var(--primary); cursor: pointer; text-decoration: underline;" onclick="resetPassword()">Zapomniałem hasła</span>
+
+                <div id="register-action-area" style="display: none;">
+                    <button class="login-btn" style="width: 100%; padding: 12px; margin-bottom: 15px;" onclick="registerEmail()" data-t="registerWithEmail">Załóż konto</button>
+                    <div style="text-align: center; color: var(--text-dim); font-size: 0.85rem;">
+                        <span data-t="hasAccount">Masz już konto?</span> 
+                        <span style="color: var(--primary); cursor: pointer; text-decoration: underline;" onclick="setAuthMode('login')" data-t="login">Zaloguj się</span>
+                    </div>
+                </div>
+
+                <div id="password-reset-link" style="text-align: center; margin-top: 15px;">
+                    <span style="font-size: 0.75rem; color: var(--text-dim); cursor: pointer; text-decoration: underline; opacity: 0.6;" onclick="resetPassword()">Zapomniałem hasła</span>
                 </div>
             </div>
 
-            <div class="close-modal" onclick="closeLoginModal()" data-t="close">Zamknij</div>
+            <div class="close-modal" onclick="closeLoginModal()" data-t="close" style="margin-top: 25px;">Zamknij</div>
         </div>
     </div>
 
@@ -1317,8 +1328,14 @@
                 close: "Zamknij",
                 email: "E-mail",
                 password: "Hasło",
-                loginWithEmail: "Zaloguj e-mailem",
-                registerWithEmail: "Zarejestruj się",
+                loginWithEmail: "Zaloguj się",
+                registerWithEmail: "Załóż konto",
+                noAccount: "Nie masz konta?",
+                register: "Zarejestruj się",
+                hasAccount: "Masz już konto?",
+                login: "Zaloguj się",
+                registerTitle: "Utwórz konto",
+                registerDesc: "Zarejestruj się, aby korzystać z platformy bez ograniczeń!",
                 streamFinder: "STREAM FINDER",
                 streamPicker: "STREAM PICKER",
                 findMovie: "Wpisz nazwę filmu lub serialu...",
@@ -1558,14 +1575,18 @@
 
         function login(method) {
             if (method === 'email') {
-                const email = document.getElementById('login-email').value;
+                const email = document.getElementById('login-email').value.trim();
                 const pass = document.getElementById('login-password').value;
-                if (!email || pass.length < 6) return alert("Wpisz poprawny email i hasło (min. 6 znaków)!");
+                if (!email || pass.length < 6) return alert(currentLang === 'pl' ? "Wpisz poprawny email i hasło (min. 6 znaków)!" : "Enter valid email and password (min. 6 chars)!");
 
                 auth.signInWithEmailAndPassword(email, pass)
                     .then(() => closeLoginModal())
                     .catch(err => {
-                        alert("Błąd logowania: " + err.message);
+                        let msg = err.message;
+                        if (err.code === 'auth/invalid-login-credentials' || err.code === 'auth/user-not-found' || err.code === 'auth/wrong-password') {
+                            msg = currentLang === 'pl' ? "Konto nie istnieje lub podałeś złe konto." : "Account does not exist or invalid credentials.";
+                        }
+                        alert(msg);
                     });
                 return;
             }
@@ -1583,12 +1604,15 @@
         }
 
         function registerEmail() {
-            const email = document.getElementById('login-email').value;
+            const email = document.getElementById('login-email').value.trim();
             const pass = document.getElementById('login-password').value;
-            if (!email || pass.length < 6) return alert("Wpisz poprawny email i hasło (min. 6 znaków)!");
+            if (!email || pass.length < 6) return alert(currentLang === 'pl' ? "Wpisz poprawny email i hasło (min. 6 znaków)!" : "Enter valid email and password (min. 6 chars)!");
 
             auth.createUserWithEmailAndPassword(email, pass)
-                .then(() => closeLoginModal())
+                .then(() => {
+                    alert(currentLang === 'pl' ? "Konto utworzone pomyślnie!" : "Account created successfully!");
+                    closeLoginModal();
+                })
                 .catch(regErr => alert("Błąd rejestracji: " + regErr.message));
         }
 
@@ -1605,8 +1629,9 @@
         }
 
         function openLoginModal(isLimitReached = false) {
+            setAuthMode('login'); // Zawsze otwieraj na logowaniu
             const modal = document.getElementById('loginModal');
-            const desc = modal.querySelector('p[data-t]');
+            const desc = document.getElementById('modal-desc');
             if (isLimitReached) {
                 desc.setAttribute('data-t', 'mustLogin');
             } else {
@@ -1614,6 +1639,29 @@
             }
             updateUI();
             modal.classList.add('active');
+        }
+
+        function setAuthMode(mode) {
+            const title = document.getElementById('modal-title');
+            const desc = document.getElementById('modal-desc');
+            const socialArea = document.getElementById('social-login-area');
+            const loginArea = document.getElementById('login-action-area');
+            const registerArea = document.getElementById('register-action-area');
+
+            if (mode === 'register') {
+                title.setAttribute('data-t', 'registerTitle');
+                desc.setAttribute('data-t', 'registerDesc');
+                socialArea.style.display = 'none';
+                loginArea.style.display = 'none';
+                registerArea.style.display = 'block';
+            } else {
+                title.setAttribute('data-t', 'login');
+                desc.setAttribute('data-t', 'loginDesc');
+                socialArea.style.display = 'block';
+                loginArea.style.display = 'block';
+                registerArea.style.display = 'none';
+            }
+            updateUI();
         }
 
         function closeLoginModal() {
