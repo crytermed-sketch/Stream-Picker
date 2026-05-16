@@ -158,13 +158,13 @@
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: none; /* Całkowite usunięcie linii */
         }
 
         .platforma-label::before {
             content: '';
             position: absolute;
-            inset: 0;
+            inset: -1px; /* Poprawka na linie na krawędziach */
             opacity: 0;
             transition: opacity 0.3s ease;
             z-index: -1;
@@ -188,9 +188,8 @@
 
         .platforma-check:checked+.platforma-label {
             color: white;
-            border-color: rgba(255, 255, 255, 0.4);
             transform: translateY(-5px);
-            box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1), 0 15px 30px -10px rgba(0, 0, 0, 0.5);
         }
 
         .platforma-check:checked+.platforma-label::before {
@@ -392,7 +391,7 @@
             height: 34px;
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.3);
+            border: none; /* Usunięcie linii */
             transition: transform 0.3s;
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
@@ -778,6 +777,164 @@
             display: flex;
         }
 
+        /* Stream Finder Styles */
+        .stream-finder-toggle {
+            padding: 8px 18px;
+            border-radius: 12px;
+            border: 1px solid var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+            color: white;
+            font-size: 0.85rem;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-right: auto; /* Pcha resztę na prawo */
+        }
+
+        .stream-finder-toggle:hover {
+            background: var(--primary);
+            box-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .finder-container {
+            max-width: 600px;
+            margin: 40px auto;
+            text-align: center;
+        }
+
+        .search-wrapper {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .finder-input {
+            width: 100%;
+            padding: 20px 25px;
+            border-radius: 20px;
+            border: 2px solid var(--border-glass);
+            background: var(--card-glass);
+            color: white;
+            font-size: 1.2rem;
+            font-family: inherit;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .finder-input:focus {
+            outline: none;
+            border-color: #ec4899;
+            box-shadow: 0 0 30px rgba(236, 72, 153, 0.2);
+        }
+
+        .suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: rgba(20, 20, 25, 0.95);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: 0 0 20px 20px;
+            z-index: 1000;
+            max-height: 400px;
+            overflow-y: auto;
+            display: none;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .suggestions.active {
+            display: block;
+        }
+
+        .suggestion-item {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .suggestion-item:last-child {
+            border-bottom: none;
+        }
+
+        .suggestion-item:hover {
+            background: rgba(236, 72, 153, 0.1);
+        }
+
+        .suggestion-poster {
+            width: 40px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .suggestion-info h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .suggestion-info p {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        .finder-results {
+            margin-top: 40px;
+            min-height: 200px;
+        }
+
+        .platform-list {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .platform-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.3s;
+        }
+
+        .platform-link:hover {
+            transform: translateY(-5px);
+        }
+
+        .platform-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 18px;
+            object-fit: contain;
+            background: #111;
+            padding: 10px;
+            border: none; /* Usunięcie linii */
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .finder-loading {
+            margin: 40px 0;
+        }
+
+        .finder-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #fff 0%, #f472b6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         /* Modal Logowania */
         .modal-overlay {
             position: fixed;
@@ -926,6 +1083,8 @@
 
     <div class="container">
         <div class="top-bar">
+            <button class="stream-finder-toggle" id="viewToggle" onclick="toggleView()" data-t="streamFinder">STREAM FINDER</button>
+
             <div class="lang-switcher">
                 <button class="lang-btn" onclick="changeLang('pl')" id="lang-pl">POLSKI</button>
                 <button class="lang-btn" onclick="changeLang('en')" id="lang-en">ENGLISH</button>
@@ -1047,6 +1206,22 @@
                 <button class="btn btn-secondary" onclick="reset()" data-t="changeFilters">Zmień filtry</button>
             </div>
         </div>
+
+        <div id="stream-finder-view" class="krok">
+            <div class="finder-container">
+                <h2 class="finder-title" data-t="streamFinder">STREAM FINDER</h2>
+                <p class="subtitle" data-t="findMovieDesc" style="margin-bottom: 30px;">Wpisz tytuł, aby sprawdzić gdzie go obejrzeć</p>
+                
+                <div class="search-wrapper">
+                    <input type="text" class="finder-input" id="finderSearch" placeholder="Wpisz nazwę filmu lub serialu..." data-t="findMovie" oninput="handleFinderInput()" autocomplete="off">
+                    <div class="suggestions" id="finderSuggestions"></div>
+                </div>
+
+                <div id="finderStatus" class="finder-results">
+                    <!-- Tu pojawią się wyniki -->
+                </div>
+            </div>
+        </div>
     </div>
 
     <footer>
@@ -1143,7 +1318,14 @@
                 email: "E-mail",
                 password: "Hasło",
                 loginWithEmail: "Zaloguj e-mailem",
-                registerWithEmail: "Zarejestruj się"
+                registerWithEmail: "Zarejestruj się",
+                streamFinder: "STREAM FINDER",
+                streamPicker: "STREAM PICKER",
+                findMovie: "Wpisz nazwę filmu lub serialu...",
+                findMovieDesc: "Wpisz tytuł, aby sprawdzić gdzie go obejrzeć",
+                searchingPlatforms: "Szukamy platform...",
+                availableOn: "Dostępne na:",
+                noPlatforms: "Niestety ten tytuł nie jest obecnie dostępny na żadnej z Twoich platform.",
             },
             en: {
                 title: "STREAM PICKER",
@@ -1196,7 +1378,14 @@
                 email: "Email",
                 password: "Password",
                 loginWithEmail: "Login with Email",
-                registerWithEmail: "Register"
+                registerWithEmail: "Register",
+                streamFinder: "STREAM FINDER",
+                streamPicker: "STREAM PICKER",
+                findMovie: "Enter movie or series name...",
+                findMovieDesc: "Type a title to check where to watch it",
+                searchingPlatforms: "Searching for platforms...",
+                availableOn: "Available on:",
+                noPlatforms: "Unfortunately, this title is not currently available on any of your platforms.",
             },
             zh: {
                 title: "STREAM PICKER",
@@ -1247,8 +1436,16 @@
                 close: "关闭",
                 email: "电子邮件",
                 password: "密码",
+                password: "密码",
                 loginWithEmail: "使用邮箱登录",
-                registerWithEmail: "注册"
+                registerWithEmail: "注册",
+                streamFinder: "STREAM FINDER",
+                streamPicker: "STREAM PICKER",
+                findMovie: "输入电影或剧集名称...",
+                findMovieDesc: "输入标题以检查在哪里观看",
+                searchingPlatforms: "正在搜索平台...",
+                availableOn: "可用平台:",
+                noPlatforms: "很遗憾，该标题目前在您的任何平台上都不可用。",
             }
         };
 
@@ -1516,6 +1713,121 @@
             currentLang = localStorage.getItem('currentLang') || (translations[sysLang] ? sysLang : 'pl');
             updateUI();
         });
+
+        let isStreamFinderMode = false;
+
+        function toggleView() {
+            isStreamFinderMode = !isStreamFinderMode;
+            const btn = document.getElementById('viewToggle');
+            const mainHeader = document.querySelector('header');
+            const krok1 = document.getElementById('krok1');
+            const krok2 = document.getElementById('krok2');
+            const finder = document.getElementById('stream-finder-view');
+
+            if (isStreamFinderMode) {
+                btn.innerText = translations[currentLang].streamPicker;
+                btn.setAttribute('data-t', 'streamPicker');
+                mainHeader.style.display = 'none';
+                krok1.classList.remove('active');
+                krok2.classList.remove('active');
+                finder.classList.add('active');
+                // Wyczyszczenie wyszukiwarki przy wejściu
+                document.getElementById('finderSearch').value = '';
+                document.getElementById('finderStatus').innerHTML = '';
+            } else {
+                btn.innerText = translations[currentLang].streamFinder;
+                btn.setAttribute('data-t', 'streamFinder');
+                mainHeader.style.display = 'block';
+                finder.classList.remove('active');
+                krok1.classList.add('active');
+            }
+            updateUI();
+        }
+
+        let finderTimeout = null;
+
+        async function handleFinderInput() {
+            const query = document.getElementById('finderSearch').value.trim();
+            const suggestionsEl = document.getElementById('finderSuggestions');
+
+            if (query.length < 2) {
+                suggestionsEl.classList.remove('active');
+                return;
+            }
+
+            clearTimeout(finderTimeout);
+            finderTimeout = setTimeout(async () => {
+                const url = `https://api.themoviedb.org/3/search/multi?api_key=${TMDB_API_KEY}&language=${currentLang === 'pl' ? 'pl-PL' : 'en-US'}&query=${encodeURIComponent(query)}&include_adult=false`;
+                try {
+                    const res = await fetch(url);
+                    const data = await res.json();
+                    const results = data.results.filter(i => i.media_type === 'movie' || i.media_type === 'tv').slice(0, 5);
+                    
+                    if (results.length > 0) {
+                        suggestionsEl.innerHTML = results.map(item => `
+                            <div class="suggestion-item" onclick="selectMovie(${item.id}, '${item.media_type}', '${(item.title || item.name).replace(/'/g, "\\'")}')">
+                                <img src="${item.poster_path ? 'https://image.tmdb.org/t/p/w92' + item.poster_path : 'https://via.placeholder.com/92x138?text=No+Image'}" class="suggestion-poster">
+                                <div class="suggestion-info">
+                                    <h4>${item.title || item.name}</h4>
+                                    <p>${(item.release_date || item.first_air_date || '').split('-')[0]} • ${item.media_type === 'movie' ? (currentLang === 'pl' ? 'Film' : 'Movie') : (currentLang === 'pl' ? 'Serial' : 'Series')}</p>
+                                </div>
+                            </div>
+                        `).join('');
+                        suggestionsEl.classList.add('active');
+                    } else {
+                        suggestionsEl.classList.remove('active');
+                    }
+                } catch (e) {
+                    console.error(e);
+                }
+            }, 300);
+        }
+
+        async function selectMovie(id, type, title) {
+            document.getElementById('finderSuggestions').classList.remove('active');
+            document.getElementById('finderSearch').value = title;
+            const statusEl = document.getElementById('finderStatus');
+            const t = translations[currentLang];
+
+            statusEl.innerHTML = `<div class="finder-loading"><div class="spinner"></div><div>${t.searchingPlatforms}</div></div>`;
+
+            // 2 sekundy oczekiwania zgodnie z prośbą
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            try {
+                const watchData = await pobierzDanePlatform(id, type);
+                
+                // Wyciągamy wszystkich dostawców (streaming, wypożyczenie, kupno)
+                const providers = [];
+                if (watchData) {
+                    if (watchData.flatrate) providers.push(...watchData.flatrate);
+                    if (watchData.rent) providers.push(...watchData.rent);
+                    if (watchData.buy) providers.push(...watchData.buy);
+                }
+
+                // Usuwamy duplikaty (ten sam dostawca może być w kilku kategoriach)
+                const uniqueProviders = Array.from(new Map(providers.map(p => [p.provider_id, p])).values());
+                
+                if (uniqueProviders.length > 0) {
+                    statusEl.innerHTML = `
+                        <h3 style="margin-bottom: 20px;">${t.availableOn}</h3>
+                        <div class="platform-list">
+                            ${uniqueProviders.map(p => `
+                                <a href="https://www.google.com/search?q=${encodeURIComponent(title + ' ' + p.provider_name + ' oglądaj online')}&btnI=1" target="_blank" class="platform-link">
+                                    <img src="https://image.tmdb.org/t/p/original${p.logo_path}" class="platform-icon" alt="${p.provider_name}">
+                                    <span>${p.provider_name}</span>
+                                </a>
+                            `).join('')}
+                        </div>
+                    `;
+                } else {
+                    statusEl.innerHTML = `<div class="error"><div style="font-size: 3rem; margin-bottom: 10px;">😢</div>${t.noPlatforms}</div>`;
+                }
+            } catch (e) {
+                console.error(e);
+                statusEl.innerHTML = `<div class="error">Error fetching data.</div>`;
+            }
+        }
 
         const TMDB_API_KEY = '4ad854ed9635fa2235dd4ad6a292f950';
 
